@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de CEP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <p style="font-weight: bold;">Insira o CEP abaixo para consulta.</p>
+        <input type="text" id="cepInput" maxlength="9" placeholder="12345-678" />
+        <input type="button" value="Buscar" onclick="consultarCep()" />
+        <br>
+        <br>
+        <div id="cepResult"></div>
+    </div>
+
+    <script>
+        async function consultarCep() {
+            const cep = document.getElementById('cepInput').value;
+            if (cep === "") {
+                alert("Digite o CEP.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/consulta-cep/${cep}`);
+                if (!response.ok) throw new Error('Erro na consulta');
+                const data = await response.json();
+                exibirResultado(data);
+            } catch (error) {
+                console.error('Erro ao consultar o CEP:', error);
+                document.getElementById('cepResult').innerText = 'Erro ao consultar o CEP.';
+            }
+        }
+
+        function exibirResultado(data) {
+            const resultDiv = document.getElementById('cepResult');
+            if (data.erro) {
+                resultDiv.innerText = 'CEP não encontrado.';
+            } else {
+                resultDiv.innerHTML = `
+                    <p><strong>CEP:</strong> ${data.cep}</p>
+                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
+                    <p><strong>Bairro:</strong> ${data.bairro}</p>
+                    <p><strong>Cidade:</strong> ${data.localidade}</p>
+                    <p><strong>Estado:</strong> ${data.uf}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

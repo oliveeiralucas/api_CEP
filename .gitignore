@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretório de ambiente de execução
+node_modules
+
+# Arquivos de build
+dist
+build
+
+# Dependências locais do sistema operacional
+.DS_Store
+
+# Diretórios temporários do sistema operacional
+*.swp
+*.swo
+
+# Arquivos de configuração do editor
+.vscode/
+.idea/
+
+# Arquivos de configuração do sistema operacional
+Thumbs.db
+desktop.ini
+
+# Arquivos de configuração do ambiente
+.env
+.env.local
+.env.*.local
+
+# Cache
+.cache
